@@ -1,0 +1,45 @@
+from news.models import *
+
+User_1 = User.objects.create_user(username='Иван')
+User_2 = User.objects.create_user(username='Владимир')
+
+Author_1 = Author.objects.create(user=User_1)
+Author_2 = Author.objects.create(user=User_2)
+
+Category_1 = Category.objects.create(name = 'Политика')
+Category_2 = Category.objects.create(name = 'Экономика')
+Category_3 = Category.objects.create(name = 'Технологии')
+Category_4 = Category.objects.create(name = 'Спорт')
+
+Post_1 = Post.objects.create(authorship=Author_1, type='A')
+Post_2 = Post.objects.create(authorship=Author_1, type='A')
+Post_3 = Post.objects.create(authorship=Author_2, type='N')
+
+Post_1.category.add(Category_4)
+Post_2.category.add(Category_3)
+Post_3.category.add(Category_1, Category_2)
+
+Comment_1 = Comment.objects.create(post=Post_1, user=User_1)
+Comment_2 = Comment.objects.create(post=Post_2, user=User_1)
+Comment_3 = Comment.objects.create(post=Post_3, user=User_2)
+Comment_4 = Comment.objects.create(post=Post_3, user=User_1)
+
+Comment_1.like()
+Comment_1.like()
+Comment_1.dislike()
+Post_1.like()
+Post_3.like()
+
+Author_1.update_rating()
+Author_2.update_rating()
+
+Author.objects.order_by('-rating').values('user__username', 'rating').first()
+
+posts = Post.objects.order_by('-rating')
+posts.values('publication_time', 'authorship__user__username', 'rating', 'title').first()
+posts.first().preview()
+
+best_post = Post.objects.order_by('-rating').first()
+comments = Comment.objects.filter(post=best_post)
+comments.values('comment_time', 'user__username', 'rating', 'text')
+
