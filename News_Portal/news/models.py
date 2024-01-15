@@ -15,8 +15,12 @@ class Author(models.Model):
         self.rating = author_post_rating * 3 + author_comment_rating + user_comment_rating
         self.save()
 
+
 class Category(models.Model):
     name = models.CharField(unique=True, max_length=64)
+
+    def __str__(self):
+        return self.name
 
 class Post(models.Model):
 
@@ -31,10 +35,12 @@ class Post(models.Model):
     type = models.CharField(max_length=1, choices=CHOISE, default=article)
     publication_time = models.DateTimeField(auto_now_add=True)
     category = models.ManyToManyField(Category, through='Post_Category')
-    title = models.CharField(default='Здесь должен быть заголовок', max_length=64)
+    title = models.CharField(default='Здесь должен быть заголовок', max_length=225)
     text = models.TextField(default='Здесь должен быть текст')
     rating = models.IntegerField(default=0)
 
+    def __str__(self):
+        return self.title
 
     def like(self):
         self.rating += 1
