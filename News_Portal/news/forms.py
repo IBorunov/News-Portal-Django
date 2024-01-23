@@ -1,3 +1,6 @@
+import django_filters
+from django_filters import FilterSet, ModelChoiceFilter, CharFilter
+from .models import Author
 from django import forms
 from django.core.exceptions import ValidationError
 

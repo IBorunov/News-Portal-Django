@@ -1,17 +1,20 @@
 import django_filters
-from django_filters import FilterSet
-from .models import Post
+from django_filters import FilterSet, ModelChoiceFilter, CharFilter
+from .models import Author
 from django import forms
 
 class PostFilter(FilterSet):
-    date = django_filters.DateFilter(
-    field_name='publication_time',
-    widget=forms.DateInput(attrs={'type':'date'}),
-    label='Date', lookup_expr='date__gte')
+    title = CharFilter(
+        label='Заголовок',
+        lookup_expr='iregex')
 
-    class Meta:
-        model = Post
-        fields = {
-           'title': ['icontains'],
-           'authorship': ['exact'],
-       }
+    authorship = ModelChoiceFilter(
+        empty_label='Все авторы',
+        label='Автор',
+        queryset=Author.objects.all())
+
+    date = django_filters.DateFilter(
+        field_name='publication_time',
+        widget=forms.DateInput(attrs={'type':'date'}),
+        label='Date',
+        lookup_expr='date__gte')
