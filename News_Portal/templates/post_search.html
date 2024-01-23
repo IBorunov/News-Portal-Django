@@ -4,12 +4,16 @@
 
 
 {% block title %}
-News with Django
+Search
 {% endblock title %}
 
 {% block content %}
-<h1>Все новости</h1>
-   <h3>Новостей на странице: {{posts | length }}</h3>
+<h2>Найти публикацию:</h2>
+
+   <form action="" method="get">
+       {{ filterset.form.as_p }}
+       <input type="submit" value="Найти" />
+   </form>
 
    <hr>
        <table>

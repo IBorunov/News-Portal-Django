@@ -6,11 +6,10 @@ register = template.Library()
 
 @register.filter()
 def censor(value):
-    yuck = ['президент',
-                'компания',
-                'банк',
-                'победа',
-                'текст'
+    yuck = ['-----------',
+                'ваыупап',
+                'нпосн',
+                'папркерщж',
                 ]  # гадости
     length = len(yuck)  # записываем кол-во гадостей
     filtered_text = ''  # отфильтрованный текст
