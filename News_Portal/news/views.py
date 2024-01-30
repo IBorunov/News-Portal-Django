@@ -70,10 +70,11 @@ class PostDelete(PermissionRequiredMixin, DeleteView):
 
 
 class ProfileUpdate(PermissionRequiredMixin, UpdateView):
-    permission_required = ('news.change_post')
+    permission_required = ('news.change_email')
     form_class = ProfileForm
     model = User
     template_name = 'profile_edit.html'
+
 @login_required
 def upgrade_me(request):
     user = request.user

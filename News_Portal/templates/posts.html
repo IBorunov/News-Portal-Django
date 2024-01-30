@@ -9,9 +9,6 @@ News with Django
 
 {% block content %}
 
-{% if is_not_author %}
-<button> <a href="upgrade/"> Хочу стать автором!</a> </button>
-{% endif %}
 
 <h1>Все новости</h1>
    <h3>Новостей на странице: {{posts | length }}</h3>
@@ -33,6 +30,11 @@ News with Django
 
        </table>
 
+{% if is_not_author %}
+<button> <a href="upgrade/"> Хочу стать автором!</a> </button>
+{% endif %}
+
+<br>
    {% if page_obj.has_previous %}
        <a href="?{% url_replace page=1 %}">1</a>
        {% if page_obj.previous_page_number != 1 %}
@@ -49,4 +51,7 @@ News with Django
        {% endif %}
    {% endif %}
 
+
+
 {% endblock content %}
+

@@ -10,9 +10,7 @@ News
 {% block content %}
 <h1>{{ posts }}</h1>
 {{ posts.publication_time |date:'d M Y' }}
-{% if is_not_author %}
-<button> <a href="upgrade/"> Хочу стать автором!</a> </button>
-{% endif %}
 <hr>
 {{ posts.text | censor }}
+
 {% endblock content %}

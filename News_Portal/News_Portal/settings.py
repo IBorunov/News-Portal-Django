@@ -49,7 +49,7 @@ INSTALLED_APPS = [
 ]
 
 LOGIN_URL = '/accounts/login/'
-LOGIN_REDIRECT_URL = '/newsportal/'
+LOGIN_REDIRECT_URL = ''
 SITE_ID = 1
 
 MIDDLEWARE = [
