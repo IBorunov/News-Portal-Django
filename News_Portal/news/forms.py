@@ -1,10 +1,9 @@
-import django_filters
-from django_filters import FilterSet, ModelChoiceFilter, CharFilter
-from .models import Author
 from django import forms
 from django.core.exceptions import ValidationError
+from allauth.account.forms import SignupForm
+from django.contrib.auth.models import Group
 
-from .models import Post
+from .models import Post, User
 
 
 class PostForm(forms.ModelForm):
@@ -27,3 +26,18 @@ class PostForm(forms.ModelForm):
                 "Текст слишком короткий.")
 
         return cleaned_data
+
+
+class BasicSignupForm(SignupForm):
+
+    def save(self, request):
+        user = super(BasicSignupForm, self).save(request)
+        common_group = Group.objects.get(name='Common')
+        common_group.user_set.add(user)
+        return user
+
+class ProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email']

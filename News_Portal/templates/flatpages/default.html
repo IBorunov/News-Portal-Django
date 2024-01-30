@@ -38,6 +38,15 @@
                <li class="nav-item">
                    <a class="nav-link" href="/newsportal/articles/create/">Добавить статью</a>
                </li>
+               {% if request.user.is_authenticated %}
+               <li class="nav-item">
+                    <a class="nav-link" href="/newsportal/profile/{request.user.id}/edit/">Мой профиль</a>
+               </li>
+               {% else %}
+               <li class="nav-item">
+                    <a class="nav-link" href="/accounts/login/">Вход/Регистрация</a>
+               </li>
+               {% endif %}
            </ul>
        </div>
    </div>

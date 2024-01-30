@@ -8,6 +8,11 @@ News with Django
 {% endblock title %}
 
 {% block content %}
+
+{% if is_not_author %}
+<button> <a href="upgrade/"> Хочу стать автором!</a> </button>
+{% endif %}
+
 <h1>Все новости</h1>
    <h3>Новостей на странице: {{posts | length }}</h3>
 
