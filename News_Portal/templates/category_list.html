@@ -10,24 +10,24 @@ News with Django
 {% block content %}
 
 
-<h1>Все новости</h1>
-   <h3>Новостей на странице: {{posts | length }}</h3>
+<h1>Новости категории "{{category}}"</h1>
+   <h3>Новостей на странице: {{category_list | length }}</h3>
+    {% if is_not_subscriber %}
+    <p class="text-center"><a href="{% url 'subscribe' category.id %}" class="btn btn-secondary btn-sm">Подписаться</a> </p>
+    {% endif %}
 
+    {% if is_subscriber %}
+    <p class="text-center"><a href="{% url 'unsubscribe' category.id %}" class="btn btn-secondary btn-sm">Отписаться</a> </p>
+    {% endif %}
    <hr>
        <table>
            <td><u>Заголовок</u></td>
-           <td><u>Категория</u></td>
            <td><u>Дата публикации</u></td>
            <td><u>Содержание</u></td>
            <td><u>Тип публикации</u></td>
-           {% for post in posts %}
+           {% for post in category_list %}
            <tr>
                <td><a href="{% url 'post_detail' post.id %}">{{ post.title | censor }}</a></td>
-               <td>
-                   {% for category in post.category.all%}
-                   <a href="{% url 'category_list' category.id %}"> {{category}}</a>
-                   {% endfor %}
-               </td>
                <td>{{ post.publication_time |date:'d M Y' }}</td>
                <td>{{ post.text | truncatewords:20 | censor }}</td>
                <td>{{ post.get_type_display }}</td>
