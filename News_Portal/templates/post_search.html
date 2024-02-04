@@ -18,12 +18,18 @@ Search
    <hr>
        <table>
            <td><u>Заголовок</u></td>
+           <td><u>Категория</u></td>
            <td><u>Дата публикации</u></td>
            <td><u>Содержание</u></td>
            <td><u>Тип публикации</u></td>
            {% for post in posts %}
            <tr>
-               <td>{{ post.title }}</td>
+               <td><a href="{% url 'post_detail' post.id %}">{{ post.title | censor }}</a></td>
+               <td>
+                   {% for category in post.category.all%}
+                   <a href="{% url 'category_list' category.id %}"> {{category}}</a>
+                   {% endfor %}
+               </td>
                <td>{{ post.publication_time |date:'d M Y' }}</td>
                <td>{{ post.text | truncatewords:20 | censor }}</td>
                <td>{{ post.get_type_display }}</td>

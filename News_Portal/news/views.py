@@ -8,9 +8,7 @@ from django.shortcuts import redirect, get_object_or_404, render
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.core.mail import send_mail
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import render_to_string
+
 
 class PostList(ListView, LoginRequiredMixin):
     model = Post
@@ -53,6 +51,7 @@ class PostCreate(PermissionRequiredMixin, CreateView):
     form_class = PostForm
     model = Post
     template_name = 'create_post.html'
+    success_url = '/'
 
     def form_valid(self, form):
         post = form.save(commit=False)
@@ -65,6 +64,7 @@ class PostUpdate(LoginRequiredMixin, UpdateView):
     form_class = PostForm
     model = Post
     template_name = 'post_edit.html'
+    success_url = '/'
 
 class PostDelete(PermissionRequiredMixin, DeleteView):
     permission_required = ('news.delete_post')
@@ -76,7 +76,8 @@ class PostDelete(PermissionRequiredMixin, DeleteView):
 class ProfileUpdate(LoginRequiredMixin, UpdateView):
     form_class = ProfileForm
     model = User
-    template_name = 'profile_edit.html'
+    template_name = 'account/profile_edit.html'
+    success_url = '/'
 
 @login_required
 def upgrade_me(request):
@@ -114,7 +115,7 @@ def subscribe(request, pk):
     category.subscribers.add(user)
 
     message = 'Вы подписались на категорию'
-    return render(request, 'subscribe.html', {'category': category, 'message': message})
+    return render(request, 'emails/subscribe.html', {'category': category, 'message': message})
 
 @login_required()
 def unsubscribe(request, pk):
@@ -123,5 +124,5 @@ def unsubscribe(request, pk):
     category.subscribers.remove(user)
 
     message = 'Вы отписались от категории'
-    return render(request, 'unsubscribe.html', {'category': category, 'message': message})
+    return render(request, 'emails/unsubscribe.html', {'category': category, 'message': message})
 
