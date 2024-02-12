@@ -17,7 +17,6 @@ urlpatterns = [
    path('category/<int:pk>', CategoryView.as_view(), name='category_list'),
    path('category/<int:pk>/subscribe', subscribe, name='subscribe'),
    path('category/<int:pk>/unsubscribe', unsubscribe, name='unsubscribe'),
-
 ]
 
 

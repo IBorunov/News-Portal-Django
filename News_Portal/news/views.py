@@ -9,7 +9,6 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
-
 class PostList(ListView, LoginRequiredMixin):
     model = Post
     ordering = 'title'
@@ -125,4 +124,3 @@ def unsubscribe(request, pk):
 
     message = 'Вы отписались от категории'
     return render(request, 'emails/unsubscribe.html', {'category': category, 'message': message})
-
